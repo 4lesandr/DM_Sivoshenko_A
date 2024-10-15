@@ -1,4 +1,5 @@
 #include "trie.h"
+#include <iostream>
 
 Trie::Trie() : root(std::unique_ptr<TrieNode>(new TrieNode())) {}
 
@@ -32,4 +33,17 @@ void Trie::insert(const std::string& word, int index) {
         node = node->children[c].get();
     }
     node->index = index;
+}
+
+void Trie::printTrie() const {
+    printTrieHelper(root.get(), "");
+}
+
+void Trie::printTrieHelper(const TrieNode* node, const std::string& prefix) const {
+    if (node->index != 0) {
+        std::cout << "'" << prefix << "' -> Index: " << node->index << std::endl;
+    }
+    for (const auto& child : node->children) {
+        printTrieHelper(child.second.get(), prefix + child.first);
+    }
 }
