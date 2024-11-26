@@ -1,0 +1,13 @@
+Distances from source: 
+Vertex 0: 0
+Vertex 1: 4
+Vertex 2: 10
+Vertex 3: 10
+Vertex 4: 13
+
+Paths (preceding vertex): 
+Vertex 0: -1
+Vertex 1: 0
+Vertex 2: 1
+Vertex 3: 0
+Vertex 4: 3
