@@ -67,6 +67,8 @@
         "concepts": "cpp",
         "algorithm": "cpp",
         "queue": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "unordered_set": "cpp",
+        "map": "cpp"
     }
 }

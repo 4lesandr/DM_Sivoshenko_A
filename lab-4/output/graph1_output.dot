@@ -1,0 +1,11 @@
+graph G {
+    3 [style=filled, fillcolor=thistle];
+    4 [style=filled, fillcolor=thistle];
+    0 [style=filled, fillcolor=thistle];
+    1 [style=filled, fillcolor=lightsteelblue];
+    2 [style=filled, fillcolor=lightsteelblue];
+    2 -- 4;
+    1 -- 3;
+    0 -- 1;
+    0 -- 2;
+}

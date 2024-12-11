@@ -20,7 +20,10 @@ bool Graph::loadFromDOT(const std::string& filename) {
         char arrow1, arrow2;
 
         if (lineStream >> start >> arrow1 >> arrow2 >> end && arrow1 == '-' && arrow2 == '>') {
-            adjacencyList[start].push_back(end);
+            adjacencyList[start].push_back(end); 
+            if (adjacencyList.find(end) == adjacencyList.end()) {
+                adjacencyList[end] = std::vector<int>();
+            }
         }
     }
 
@@ -31,14 +34,16 @@ bool Graph::loadFromDOT(const std::string& filename) {
 bool Graph::isArborescence(std::string& output) const {
     std::unordered_map<int, int> inDegree;
     std::unordered_set<int> allVertices;
+    int edgeCount = 0;
+    std::string reasons;
 
-    // Заполняем все вершины и считаем полустепени захода
     for (const auto& pair : adjacencyList) {
         int u = pair.first;
         allVertices.insert(u);
         for (int v : pair.second) {
             inDegree[v]++;
             allVertices.insert(v);
+            edgeCount++;
         }
     }
 
@@ -50,51 +55,56 @@ bool Graph::isArborescence(std::string& output) const {
     }
 
     if (roots.size() != 1) {
-        output = "Некорректный корень или несколько корней.";
-        return false;
+        reasons += "Некорректный корень или несколько корней.\n";
     }
 
-    int root = roots[0];
+    int root = !roots.empty() ? roots[0] : -1;
 
     for (int v : allVertices) {
         if (v != root && inDegree[v] != 1) {
-            output = "Вершина " + std::to_string(v) + " имеет некорректную полустепень захода.";
-            return false;
+            reasons += "Вершина " + std::to_string(v) + " имеет некорректную полустепень захода.\n";
         }
     }
 
     std::unordered_set<int> visited;
-    std::queue<int> q;
-    q.push(root);
+    if (root != -1) {
+        std::queue<int> q;
+        q.push(root);
 
-    while (!q.empty()) {
-        int current = q.front();
-        q.pop();
+        while (!q.empty()) {
+            int current = q.front();
+            q.pop();
 
-        if (visited.count(current)) {
-            output = "Граф содержит цикл.";
-            return false;
-        }
+            visited.insert(current);
 
-        visited.insert(current);
-
-        auto it = adjacencyList.find(current);
-        if (it != adjacencyList.end()) {
-            for (int neighbor : it->second) {
-                if (!visited.count(neighbor)) {
-                    q.push(neighbor);
+            auto it = adjacencyList.find(current);
+            if (it != adjacencyList.end()) {
+                for (int neighbor : it->second) {
+                    if (!visited.count(neighbor)) {
+                        q.push(neighbor);
+                    }
                 }
             }
         }
+    } else {
+        reasons += "Отсутствует корень для начала обхода.\n";
     }
 
     if (visited.size() != allVertices.size()) {
-        output = "Не все вершины достижимы.";
-        return false;
+        reasons += "Не все вершины достижимы.\n";
     }
 
-    output = "Граф является ордеревом.";
-    return true;
+    if (allVertices.size() != edgeCount + 1) {
+        reasons += "Граф не является древочисленным (V != E + 1).";
+    }
+
+    if (reasons.empty()) {
+        output = "Граф является ордеревом.";
+        return true;
+    } else {
+        output = reasons;
+        return false;
+    }
 }
 
 void Graph::saveResult(const std::string& filename, const std::string& result) const {
