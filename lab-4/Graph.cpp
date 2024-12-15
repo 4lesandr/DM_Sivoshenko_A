@@ -32,7 +32,7 @@ void Graph::readGraphFromDot(const std::string& filePath) {
         } else if (line.find("->") != std::string::npos) {
             size_t pos = line.find("->");
             int u = std::stoi(line.substr(0, pos));
-            int v = std::stoi(line.substr(pos + 2));
+            int v = std::stoi(line.substr(pos + 2));           
             adjList[u].push_back(v);
         }
     }
@@ -107,22 +107,24 @@ void Graph::writeColoringToFile(const std::string& outputPath) const {
         return;
     }
 
+    int chromaticNumber = getChromaticNumber();
+    outFile << "// Хроматическое число: " << chromaticNumber << "\n";
+
     outFile << "graph G {\n";
 
     for (const auto& pair : coloring) {
         int vertex = pair.first;
         int color = pair.second;
         
-        // Получаем цвет из карты цветов, используя остаток от деления для повторения
         std::string fillColor = colorMap.at((color - 1) % colorMap.size() + 1);
-
+        
         outFile << "    " << vertex << " [style=filled, fillcolor=" << fillColor << "];\n";
     }
 
     for (const auto& pair : adjList) {
         int u = pair.first;
         for (int v : pair.second) {
-            if (u < v) { // Чтобы указать каждое ребро только один раз
+            if (u < v) {
                 outFile << "    " << u << " -- " << v << ";\n";
             }
         }

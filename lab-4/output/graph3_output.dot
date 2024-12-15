@@ -1,3 +1,4 @@
+// Хроматическое число: 4
 graph G {
     0 [style=filled, fillcolor=peachpuff];
     1 [style=filled, fillcolor=lightpink];

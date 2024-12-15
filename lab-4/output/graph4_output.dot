@@ -1,3 +1,4 @@
+// Хроматическое число: 3
 graph G {
     0 [style=filled, fillcolor=lightpink];
     1 [style=filled, fillcolor=thistle];
