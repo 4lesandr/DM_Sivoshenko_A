@@ -45,7 +45,7 @@ void Graph::greedyColoring() {
     }
 
     std::sort(vertices.begin(), vertices.end(), [this](int v1, int v2) {
-        return adjList[v1].size() > adjList[v2].size();
+       return adjList[v1].size() > adjList[v2].size();
     });
 
     for (int vertex : vertices) {

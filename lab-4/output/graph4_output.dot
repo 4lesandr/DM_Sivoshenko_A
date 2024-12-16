@@ -1,13 +1,23 @@
-// Хроматическое число: 3
+// Хроматическое число: 2
 graph G {
-    0 [style=filled, fillcolor=lightpink];
-    1 [style=filled, fillcolor=thistle];
+    1 [style=filled, fillcolor=lightsteelblue];
+    6 [style=filled, fillcolor=thistle];
+    7 [style=filled, fillcolor=thistle];
     2 [style=filled, fillcolor=lightsteelblue];
-    3 [style=filled, fillcolor=thistle];
+    5 [style=filled, fillcolor=thistle];
+    8 [style=filled, fillcolor=thistle];
+    3 [style=filled, fillcolor=lightsteelblue];
     4 [style=filled, fillcolor=lightsteelblue];
-    3 -- 4;
-    2 -- 3;
-    1 -- 2;
-    0 -- 1;
-    0 -- 4;
+    4 -- 5;
+    4 -- 6;
+    4 -- 7;
+    3 -- 5;
+    3 -- 6;
+    3 -- 8;
+    2 -- 5;
+    2 -- 7;
+    2 -- 8;
+    1 -- 6;
+    1 -- 7;
+    1 -- 8;
 }
